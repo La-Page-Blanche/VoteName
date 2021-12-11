@@ -15,7 +15,10 @@ const voteSchema = new mongoose.Schema(
             type: [
                 {
                     name: String,
-                    voteCount: Number,
+                    voteCount: {
+                        type: Number,
+                        default: 1,
+                    },
                 },
             ],
         },

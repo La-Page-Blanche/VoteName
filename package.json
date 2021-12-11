@@ -17,11 +17,14 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "client": "cd client && npm start"
+    "client": "cd client && npm start",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "build": "cd client && npm run build"
   },
-  "name": "jp2-circulaire",
+  "name": "votename",
   "version": "1.0.0",
-  "description": "Circulaire de JP2 en ligne",
+  "description": "VoteName for strawpolls",
   "main": "server.js",
   "devDependencies": {},
   "author": "FrostBreker",

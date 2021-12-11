@@ -18,12 +18,19 @@ module.exports.voteInfo = (req, res) => {
 };
 
 module.exports.createVote = async (req, res) => {
-  const newVote = new VoteModel({
-    voteName: req.body.name,
-    desc: req.body.desc,
-    choice: [],
-  });
 
-  const vote = await newVote.save();
-  return res.status(201).json(vote);
+  try {
+    const newVote = new VoteModel({
+      voteName: req.body.name,
+      desc: req.body.desc,
+      choice: {
+        name: req.body.choice
+      },
+    });
+
+    const vote = await newVote.save();
+    return res.status(201).json(vote);
+  } catch (err) {
+    res.status(200).send("err")
+  }
 };

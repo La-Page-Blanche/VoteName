@@ -8,11 +8,19 @@ import rootReducer from "./reducers";
 import './styles/index.scss';
 //Dev tools
 import { composeWithDevTools } from "redux-devtools-extension";
+import { getAllVotes } from './actions/votes.actions';
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+
+store.dispatch(getAllVotes());
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-    </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );

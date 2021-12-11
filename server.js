@@ -5,6 +5,7 @@ const voteRoutes = require("./routes/vote.routes");
 require("dotenv").config({ path: "./config/.env" });
 const db  = require("./config/db");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -26,6 +27,12 @@ app.use(cookieParser());
 
 //routes
 app.use("/api/vote", voteRoutes);
+
+//Optimized version
+app.use(express.static("client/build"));
+app.get("/*", (_, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 // server
 app.listen(process.env.PORT, () => {

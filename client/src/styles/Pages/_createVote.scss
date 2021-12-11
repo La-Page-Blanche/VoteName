@@ -1,0 +1,52 @@
+header {
+  background-color: $color-5;
+}
+
+body {
+  background-color: $color-5;
+}
+
+footer {
+  background-color: $color-5;
+}
+
+
+.create-vote {
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    background-color: $color-3;
+    border-radius: 20px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+    h1 {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      color: $color-2;
+    }
+    label {
+      text-align: center;
+      font-size: 30px;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      color: $color-4;
+    }
+
+    textarea,
+    input {
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 25px;
+      height: 50px;
+    }
+    textarea {
+      height: 75px;
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import userReducer from './users.reducer';
+import votesReducer from './votes.reducer';
+import allVotesReducer from './allVotes.reducer';
 
 export default combineReducers({
-    userReducer
-  });
+  votesReducer,
+  allVotesReducer
+});
