@@ -11,6 +11,10 @@ const voteSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        endDate: {
+            type: String,
+            required: true,
+        },
         choice: {
             type: [
                 {

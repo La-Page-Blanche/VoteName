@@ -5,19 +5,26 @@ export default function CreateVote() {
     const [name, setName] = useState();
     const [desc, setDesc] = useState();
     const [choice, setChoice] = useState();
+    const [endDate, setEndDate] = useState();
 
     function handleCreate(e) {
         e.preventDefault();
         const nodataError = document.querySelector(".nodata.error");
 
-        if(!name || !desc) return nodataError.innerHTML = "Certaines informations sont invalides ou incomplêtes";
+        if (!name || !desc || !choice || !endDate) return nodataError.innerHTML = "Certaines informations sont invalides ou incomplètes";
         else {
-            
+            var date = endDate;
+            date = date.split("-");
+            console.log(date);
+            var newDate = new Date(date[0], date[1] - 1, date[2]);
+
             const data = {
                 "name": name,
                 "desc": desc,
-                "choice": choice
+                "choice": choice,
+                "endDate": newDate.getTime()
             }
+
 
             axios({
                 method: "post",
@@ -57,7 +64,7 @@ export default function CreateVote() {
                     placeholder="Journal ....."
                     onChange={(e) => setDesc(e.target.value)}
                     value={desc}
-                                    />
+                />
                 <label>Choix par defaut</label>
                 <input
                     type="text"
@@ -66,6 +73,14 @@ export default function CreateVote() {
                     placeholder="LaGuardia LGA"
                     onChange={(e) => setChoice(e.target.value)}
                     value={choice}
+                />
+                <label>Date de fin</label>
+                <input
+                    type="date"
+                    name="endDate"
+                    id="endDate"
+                    onChange={(e) => setEndDate(e.target.value)}
+                    value={endDate}
                 />
                 <br />
                 <div className="nodata error"></div>

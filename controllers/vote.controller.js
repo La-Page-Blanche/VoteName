@@ -23,6 +23,7 @@ module.exports.createVote = async (req, res) => {
     const newVote = new VoteModel({
       voteName: req.body.name,
       desc: req.body.desc,
+      endDate: req.body.endDate,
       choice: {
         name: req.body.choice
       },
