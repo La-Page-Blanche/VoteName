@@ -15,7 +15,6 @@ export default function CreateVote() {
         else {
             var date = endDate;
             date = date.split("-");
-            console.log(date);
             var newDate = new Date(date[0], date[1] - 1, date[2]);
 
             const data = {

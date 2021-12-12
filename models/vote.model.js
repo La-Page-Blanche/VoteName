@@ -13,12 +13,21 @@ const voteSchema = new mongoose.Schema(
         },
         endDate: {
             type: String,
+        },
+        end: {
+            type: Boolean,
             required: true,
+            default: false,
         },
         choice: {
             type: [
                 {
-                    name: String,
+                    name: {
+                        type: String,
+                        required: true,
+                        unique: true,
+                       
+                    },
                     voteCount: {
                         type: Number,
                         default: 1,
