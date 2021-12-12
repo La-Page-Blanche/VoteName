@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from '../components/Utils';
-import { addProp, getVote, voteForProp } from '../actions/votes.actions'
+import { addProp, getVote, voteForProp } from '../actions/votes.actions';
+import QRCode from 'qrcode.react';
 
 export default function VoteViewer() {
     const dispatch = useDispatch();
@@ -84,9 +85,20 @@ export default function VoteViewer() {
                 <i className="fas fa-spinner fa-spin" id="loading"></i>
             ) : (
                 <div className="voteViewer">
+                    <br />
+                    <br />
                     <div className="header">
                         <h1>{poll.voteName}</h1>
                         <p>{poll.desc}</p>
+
+                        <div className="qrcode">
+                            <h3>Partager le sondage!</h3>
+
+                            <div className="qr">
+                                <QRCode value={window.location.href} />
+                            </div>
+                        </div>
+
                     </div>
 
                     <div className="contents">
@@ -145,6 +157,7 @@ export default function VoteViewer() {
                             )
                         }
                     </div>
+
                 </div>
             )
             }

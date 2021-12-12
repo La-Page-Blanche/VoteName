@@ -23,6 +23,8 @@ export default function Home() {
         <>
             {isLoading ? (
                 <div className="home">
+                    <br />
+                    <br />
                     <div className="header">
                         <h1>VoteName</h1>
                         <h3>Crée un sondage !</h3>
@@ -38,6 +40,8 @@ export default function Home() {
                 </div>
             ) : (
                 <div className="home">
+                    <br />
+                    <br />
                     <div className="header">
                         <h1>VoteName</h1>
                         <h3>Crée un sondage !</h3>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 export default function CreateVote() {
@@ -43,6 +43,8 @@ export default function CreateVote() {
 
     return (
         <div className="create-vote">
+            <br />
+            <br />
             <form onSubmit={handleCreate}>
                 <h1>Crée un sondage</h1>
                 <label>Nom du sondage</label>
