@@ -19,6 +19,19 @@ const voteSchema = new mongoose.Schema(
             required: true,
             default: false,
         },
+        hasVoted: {
+            type: [
+                {
+                    ip: {
+                        type: String,
+                        required: true,
+                        unique: true,
+                       
+                    },
+                },
+            ],
+            required: true,
+        },
         choice: {
             type: [
                 {

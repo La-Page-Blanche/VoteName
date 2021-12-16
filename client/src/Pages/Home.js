@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from '../components/Utils';
 import { endPoll } from '../actions/votes.actions';
+import axios from 'axios';
 
 export default function Home() {
     const polls = useSelector((state) => state.allVotesReducer);
@@ -18,6 +19,7 @@ export default function Home() {
     useEffect(() => {
         if (!isEmpty(polls)) setIsLoading(false)
     }, [polls]);
+
 
     return (
         <>

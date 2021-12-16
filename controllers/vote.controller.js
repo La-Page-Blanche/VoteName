@@ -63,8 +63,10 @@ module.exports.voteForProp = async (req, res) => {
         c._id.equals(req.body.voteId)
       );
 
+
       if (!theComment) return res.status(404).send("VoteProp not found");
       theComment.voteCount = theComment.voteCount + 1;
+      docs.hasVoted.push({ip: req.body.ip})
 
       return docs.save((err) => {
         if (!err) return res.status(200).send(docs);

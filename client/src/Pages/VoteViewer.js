@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from '../components/Utils';
 import { addProp, getVote, voteForProp } from '../actions/votes.actions';
 import QRCode from 'qrcode.react';
+import axios from 'axios';
 
 export default function VoteViewer() {
     const dispatch = useDispatch();
@@ -10,8 +11,18 @@ export default function VoteViewer() {
     let tab = window.location.pathname.replace();
     var pseudoTab = tab.split("/")[1];
 
+    const [ip, setIp] = useState("");
+
     useEffect(() => {
         dispatch(getVote(pseudoTab))
+
+        function getIp() {
+            axios.get("http://ip-api.com/json").then((data) => {
+                setIp(data.data.query);
+            })
+        }
+
+        getIp()
     }, []);
 
     const poll = useSelector((state) => state.votesReducer);
@@ -20,6 +31,17 @@ export default function VoteViewer() {
     const [selectedRadio, setSelectedRadio] = useState();
 
     const [voteBtn, setVoteBtn] = useState(false);
+
+    const [isVoted, setIsVoted] = useState(true);
+
+    function containsIp(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].ip === obj) {
+                return true
+            }
+        }
+        return false;
+    }
 
     useEffect(() => {
         if (!isEmpty(poll)) setIsLoading(false);
@@ -30,23 +52,26 @@ export default function VoteViewer() {
             const finish = document.querySelector(".finish.success");
             if (poll.end === true) finish.innerHTML = "Ce sondages est terminées!";
             else finish.innerHTML = " ";
+            setIsVoted(containsIp(poll.hasVoted, ip))
         }
 
-    }, [poll, selectedRadio, voteBtn, isLoading]);
+    }, [poll, selectedRadio, voteBtn, isLoading, ip]);
+
+    const nodataError = document.querySelector(".nodata.error");
+
+    function containsProp(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].name === obj) {
+                nodataError.innerHTML = "Proposition déja inscrit!";
+                return true
+            }
+        }
+        return false;
+    }
 
 
     function handleAddProp() {
-        const nodataError = document.querySelector(".nodata.error");
 
-        function contains(a, obj) {
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].name === obj) {
-                    nodataError.innerHTML = "Proposition déja inscrit!";
-                    return true
-                }
-            }
-            return false;
-        }
 
         if (!prop) {
             nodataError.innerHTML = "Vous navez entrée aucune proposition!";
@@ -56,7 +81,7 @@ export default function VoteViewer() {
                 window.location.reload();
             } else {
 
-                if (contains(poll.choice, prop) === false) {
+                if (containsProp(poll.choice, prop) === false) {
                     dispatch(addProp(pseudoTab, prop))
                     window.location.reload();
                 }
@@ -70,7 +95,8 @@ export default function VoteViewer() {
     }
 
     function handleVote() {
-        dispatch(voteForProp(pseudoTab, selectedRadio));
+
+        dispatch(voteForProp(pseudoTab, selectedRadio, ip));
         window.location.reload();
     }
 
@@ -78,7 +104,7 @@ export default function VoteViewer() {
         setSelectedRadio();
         setVoteBtn(false);
     }
-
+    console.log(isVoted);
     return (
         <>
             {isLoading ? (
@@ -118,9 +144,10 @@ export default function VoteViewer() {
                         <ul>
                             {
                                 poll.choice.map((c) => {
-                                    if (poll.end === false || !poll.end) {
-                                        return (
-                                            <li key={c._id}>
+                                    if (isVoted === false ) {
+                                        if(poll.end === false || !poll.end)  {
+                                            return (
+                                                <li key={c._id}>
                                                 <h1>{c.voteCount}</h1>
                                                 <h3>{c.name}</h3>
                                                 <input
@@ -132,10 +159,9 @@ export default function VoteViewer() {
                                                     onChange={handleRadio}
                                                 />
                                             </li>
-                                        )
-                                    }
-
-                                    if (poll.end === true) {
+                                            )
+                                        } else return null
+                                    } else {
                                         return (
                                             <li key={c._id}>
                                                 <h1>{c.voteCount}</h1>
@@ -143,7 +169,6 @@ export default function VoteViewer() {
                                             </li>
                                         )
                                     }
-
                                 })
                             }
                         </ul>
@@ -155,6 +180,8 @@ export default function VoteViewer() {
                                     <button onClick={handleVote}>Voter</button>
                                 </div>
                             )
+
+                            
                         }
                     </div>
 

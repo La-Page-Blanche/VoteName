@@ -57,12 +57,12 @@ export const addProp = (id, prop) => {
   };
 };
 
-export const voteForProp = (id, voteId) => {
+export const voteForProp = (id, voteId, ip) => {
   return (dispatch) => {
     return axios({
       method: "patch",
       url: `${process.env.REACT_APP_API_URL}api/vote/vote/${id}`,
-      data: { voteId: voteId}
+      data: { voteId: voteId, ip: ip}
     })
       .then((res) => {
         dispatch({ type: VOTE_FOR_PROP, payload: { voteId } });
