@@ -144,23 +144,28 @@ export default function VoteViewer() {
                         <ul>
                             {
                                 poll.choice.map((c) => {
-                                    if (isVoted === false ) {
-                                        if(poll.end === false || !poll.end)  {
+                                    if (isVoted === false) {
+                                        if (poll.end === false || !poll.end) {
                                             return (
                                                 <li key={c._id}>
+                                                    <h1>{c.voteCount}</h1>
+                                                    <h3>{c.name}</h3>
+                                                    <input
+                                                        type="radio"
+                                                        name="radio"
+                                                        checked={c._id === selectedRadio}
+                                                        value={c._id}
+                                                        id={c._id}
+                                                        onChange={handleRadio}
+                                                    />
+                                                </li>
+                                            )
+                                        } else return (
+                                            <li key={c._id}>
                                                 <h1>{c.voteCount}</h1>
                                                 <h3>{c.name}</h3>
-                                                <input
-                                                    type="radio"
-                                                    name="radio"
-                                                    checked={c._id === selectedRadio}
-                                                    value={c._id}
-                                                    id={c._id}
-                                                    onChange={handleRadio}
-                                                />
                                             </li>
-                                            )
-                                        } else return null
+                                        )
                                     } else {
                                         return (
                                             <li key={c._id}>
@@ -181,7 +186,7 @@ export default function VoteViewer() {
                                 </div>
                             )
 
-                            
+
                         }
                     </div>
 
